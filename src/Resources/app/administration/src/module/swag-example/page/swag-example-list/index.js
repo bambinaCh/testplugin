@@ -13,20 +13,24 @@ Component.register('swag-example-list',
         },
         methods: {
 
-            // importProducts() {
-            //     this.$http.post('/api/test-plugin/import').then(() => {
-            //         this.createNotificationSuccess({ message: 'Produkte importiert!' });
-            //     }).catch(error => {
-            //         this.createNotificationError({ message: 'Fehler beim Importieren!' });
-            //     });
-            // },
-            // deleteImportedProducts() {
-            //     this.$http.post('/api/test-plugin/delete').then(() => {
-            //         this.createNotificationSuccess({ message: 'Importierte Produkte gelöscht!' });
-            //     }).catch(error => {
-            //         this.createNotificationError({ message: 'Fehler beim Löschen!' });
-            //     });
-            // },
+            importProducts() {
+                Shopware.Service('syncService').httpClient.post('/api/test-plugin/import', {}, { })
+                .then(() => {
+                    this.createNotificationSuccess({ message: 'Produkte importiert!' });
+                })
+                .catch(() => {
+                    this.createNotificationError({ message: 'Fehler beim Importieren!' });
+                });
+            },
+            deleteImportedProducts() {
+                Shopware.Service('syncService').httpClient.post('/api/test-plugin/delete', {}, { })
+                    .then(() => {
+                        this.createNotificationSuccess({ message: 'Importierte Produkte gelöscht!' });
+                    })
+                    .catch(() => {
+                        this.createNotificationError({ message: 'Fehler beim Löschen!' });
+                    });
+            }
         }
     }
 
