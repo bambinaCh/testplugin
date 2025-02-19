@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="TestPlugin\Command\ExampleCommand">
+            <argument type="service" id="TestPlugin\Service\CustomFieldsInstaller" />
+            <tag name="console.command" />
+        </service>
+
+        <service id="TestPlugin\Service\CustomFieldsInstaller" public="true">
+            <argument type="service" id="http_client" />
+            <argument type="service" id="product.repository" />
+        </service>
+
+        <service id="TestPlugin\ScheduledTask\ExampleTask">
+            <tag name="shopware.scheduled.task" />
+        </service>
+
+        <service id="TestPlugin\Subscriber\MySubscriber">
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="TestPlugin\Storefront\Controller\ExampleController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig" />
+            </call>
+        </service>
+
+        <service id="TestPlugin\Core\Content\Example\SalesChannel\ExampleRoute">
+            <argument type="service" id="product.repository" />
+        </service>
+        
+        <service id="TestPlugin\Controller\ProductImportController">
+            <argument type="service" id="product.repository" />
+            <tag name="controller.service_arguments" />
+        </service>
+        
+    </services>
+</container>
