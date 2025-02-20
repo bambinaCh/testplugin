@@ -36,11 +36,22 @@ class CustomFieldsInstaller
         $products = [];
 
         foreach ($data['products'] as $apiProduct) {
+            $productNumber = $apiProduct['sku'] ?? Uuid::randomHex();
+
+            
+            $criteria = new Criteria();
+            $criteria->addFilter(new EqualsFilter('productNumber', $productNumber));
+            $existingProduct = $this->productRepository->search($criteria, $context)->first();
+    
+            if ($existingProduct) {
+                continue;
+            }
+
             $products[] = [
                 'id' => Uuid::randomHex(),
                 'name' => $apiProduct['title'],
                 'description' => $apiProduct['description'],
-                'productNumber' => $apiProduct['sku'] ?? Uuid::randomHex(),
+                'productNumber' => $productNumber,
                 'price' => [
                     [
                         'currencyId' => Defaults::CURRENCY,
