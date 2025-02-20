@@ -21,12 +21,12 @@ Component.register('swag-example-list',
                         this.createNotificationSuccess({ message: 'Produkte importiert!' });
                         
                     } else {
-                        this.createNotificationSuccess({ message: 'Produkte not sucess' });
+                        this.createNotificationError({ message: 'Produkte Import not sucess' });
                     }
                 }).catch((error) => {
                     this.createNotificationError({ message: 'Error beim Importieren!' });
                 }).finally(() => {
-                    this.createNotificationSuccess({ message: 'Ende Importieren!' });
+                    console.log("Import Prozess beendet");
                 });
             },
             deleteImportedProducts() {
@@ -36,12 +36,12 @@ Component.register('swag-example-list',
                        this.createNotificationSuccess({ message: "Importierte Produkte gelöscht!"});
                         
                     } else {
-                        this.createNotificationSuccess({ message: "Löschung not success"});
+                        this.createNotificationError({ message: "Löschung Import not sucess"});
                     }
                 }).catch((error) => {
-                    this.createNotificationError({ message: "error"});
+                    this.createNotificationError({ message: "Fehler bei der Löschung"});
                 }).finally(() => {
-                    this.createNotificationSuccess({ message: 'Ende Löschung Import'});
+                    console.log("LöschungImport Prozess beendet");
                 });
             }
         }
