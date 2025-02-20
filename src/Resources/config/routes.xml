@@ -8,6 +8,38 @@
 
     <import resource="../../Core/**/*Route.php" type="attribute" />
 
-    <import resource="../../Controller/" type="attribute" prefix="" />
+    <route id="api.action.test_plugin.import"
+        path="/api/_action/test-plugin/import" methods="POST">
+        <default key="_controller"> TestPlugin\Controller\ProductImportController::importProducts </default>
+        <default key="_routeScope">
+            <list>
+                <string>api</string>
+            </list>
+        </default>
+    </route>
+
+    <route id="api.action.test_plugin.delete"
+        path="/api/_action/test-plugin/delete" methods="POST">
+        <default key="_controller">
+            TestPlugin\Controller\ProductImportController::deleteImportedProducts </default>
+        <default key="_routeScope">
+            <list>
+                <string>api</string>
+            </list>
+        </default>
+    </route>
+
+
+    <!-- <route id="api.action.into_symbio_connector.dashboard.full_update"
+        path="/api/_action/into-symbio-connector/dashboard/full-update" methods="POST">
+        <default key="_controller">
+            IntoSymbioConnector\Administration\DashboardController::fullUpdate</default>
+        <default key="_routeScope">
+            <list>
+                <string>api</string>
+            </list>
+        </default>
+    </route> -->
+
 
 </routes>

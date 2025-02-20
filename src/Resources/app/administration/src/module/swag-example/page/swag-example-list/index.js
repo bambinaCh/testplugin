@@ -14,7 +14,7 @@ Component.register('swag-example-list',
         methods: {
 
             importProducts() {
-                Shopware.Service('syncService').httpClient.post('/test-plugin/import', {}, { })
+                Shopware.Service('syncService').httpClient.post('/_action/test-plugin/import', {}, { })
                 .then(() => {
                     this.createNotificationSuccess({ message: 'Produkte importiert!' });
                 })
@@ -23,7 +23,7 @@ Component.register('swag-example-list',
                 });
             },
             deleteImportedProducts() {
-                Shopware.Service('syncService').httpClient.post('/test-plugin/delete', {}, { })
+                Shopware.Service('syncService').httpClient.post('/_action/test-plugin/delete', {}, { })
                     .then(() => {
                         this.createNotificationSuccess({ message: 'Importierte Produkte gelöscht!' });
                     })
