@@ -14,6 +14,7 @@
         <service id="TestPlugin\Service\CustomFieldsInstaller" public="true">
             <argument type="service" id="http_client" />
             <argument type="service" id="product.repository" />
+
         </service>
 
         <service id="TestPlugin\ScheduledTask\ExampleTask">
@@ -36,11 +37,17 @@
         <service id="TestPlugin\Core\Content\Example\SalesChannel\ExampleRoute">
             <argument type="service" id="product.repository" />
         </service>
-        
+
         <service id="TestPlugin\Controller\ProductImportController">
-            <argument type="service" id="product.repository" />
+            <argument type="service" id="TestPlugin\Service\CustomFieldsInstaller" />
             <tag name="controller.service_arguments" />
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
         </service>
-        
+
+
+       
+
     </services>
 </container>

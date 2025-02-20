@@ -19,15 +19,19 @@ class ProductImportController extends AbstractController
         $this->customFieldsInstaller = $customFieldsInstaller;
     }
 
-    
+
     public function importProducts(Context $context): JsonResponse
     {
+
+        // dump('Controller aufgerufen');
+        // die();
+
         $this->customFieldsInstaller->importProducts($context);
 
         return new JsonResponse(['message' => 'Produkte erfolgreich importiert!']);
     }
 
-    
+
     public function deleteImportedProducts(Context $context): JsonResponse
     {
         $this->customFieldsInstaller->deleteImportedProducts($context);

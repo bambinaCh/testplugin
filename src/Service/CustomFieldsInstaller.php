@@ -25,29 +25,6 @@ class CustomFieldsInstaller
 
     public function importProducts(Context $context): void
     {
-        // $suffix = uniqid();
-        // var_dump(Uuid::randomHex());
-        // $this->productRepository->create([[
-        //     'id'            => Uuid::randomHex(),
-        //     'name'          => 'This is a sample product ' . $suffix,
-        //     'taxId'         => "01938c22fc0f71d297cec046c4722ce1",
-        //     'stock'         => 999,
-        //     'createdAt'     => '2022-01-01T10:17:05+02:00',
-        //     'price'         => [
-        //         [
-        //             'currencyId' => 'b7d2554b0ce847cd82f3ac9bd1c0dfca',
-        //             'gross'      => 99,
-        //             'net'        => 99,
-        //             'linked'     => true,
-        //         ]
-        //     ],
-        //     'productNumber' => $suffix,
-
-        // ]], Context::createDefaultContext());
-
-        // die();
-
-
         $response = $this->httpClient->request('GET', 'https://dummyjson.com/products');
         $data = $response->toArray();
 
