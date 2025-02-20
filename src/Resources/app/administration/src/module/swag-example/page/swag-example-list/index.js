@@ -5,7 +5,8 @@ const { Criteria } = Shopware.Data;
 
 Component.register('swag-example-list',
     {
-        template, inject: ['intoDashboard'],
+        template, 
+        inject: ['productService'],
         mixins: [Mixin.getByName('notification')],
 
         data() {
@@ -14,22 +15,34 @@ Component.register('swag-example-list',
         methods: {
 
             importProducts() {
-                Shopware.Service('syncService').httpClient.post('/_action/test-plugin/import', {}, { })
-                .then(() => {
-                    this.createNotificationSuccess({ message: 'Produkte importiert!' });
-                })
-                .catch(() => {
-                    this.createNotificationError({ message: 'Fehler beim Importieren!' });
+                this.productService.import().then((response) => {
+                    console.log(response);
+                    if (response && response.message.indexOf('erfolgreich') > 0) {
+                        this.createNotificationSuccess({ message: 'Produkte importiert!' });
+                        
+                    } else {
+                        this.createNotificationSuccess({ message: 'Produkte not sucess' });
+                    }
+                }).catch((error) => {
+                    this.createNotificationError({ message: 'Error beim Importieren!' });
+                }).finally(() => {
+                    this.createNotificationSuccess({ message: 'Ende Importieren!' });
                 });
             },
             deleteImportedProducts() {
-                Shopware.Service('syncService').httpClient.post('/_action/test-plugin/delete', {}, { })
-                    .then(() => {
-                        this.createNotificationSuccess({ message: 'Importierte Produkte gelöscht!' });
-                    })
-                    .catch(() => {
-                        this.createNotificationError({ message: 'Fehler beim Löschen!' });
-                    });
+                this.productService.deleteImported().then((response) => {
+                    console.log(response);
+                    if (response && response.message.indexOf('erfolgreich')) {
+                       this.createNotificationSuccess({ message: "Importierte Produkte gelöscht!"});
+                        
+                    } else {
+                        this.createNotificationSuccess({ message: "Löschung not success"});
+                    }
+                }).catch((error) => {
+                    this.createNotificationError({ message: "error"});
+                }).finally(() => {
+                    this.createNotificationSuccess({ message: 'Ende Löschung Import'});
+                });
             }
         }
     }

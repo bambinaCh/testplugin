@@ -8,6 +8,7 @@ use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -64,7 +65,9 @@ class CustomFieldsInstaller
     public function deleteImportedProducts(Context $context): void
     {
         $criteria = new Criteria();
-        $criteria->addFilter(new EqualsFilter('manufacturer.name', 'Unbekannt'));
+        $criteria->addFilter(new RangeFilter('autoIncrement', [
+            RangeFilter::GTE => 16
+        ]));
 
         $productIds = $this->productRepository->searchIds($criteria, $context)->getIds();
 
