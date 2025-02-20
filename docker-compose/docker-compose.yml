@@ -1,0 +1,30 @@
+volumes:
+  shop_db-6690:
+    driver: local
+  shop_data-6690:
+    driver: local
+networks:
+  web:
+    external: false
+ 
+services:
+  shopware-6690:
+    image: dockware/dev:6.6.9.0
+    container_name: shopware-6690
+    ports:
+      - "80:80"
+      - "3324:3306"
+      - "24:22"
+      #- "9999:9999"
+      - "8888:8888"
+      - "9998:9998"
+    build: .
+    networks:
+      - web
+    environment:
+      - PHP_VERSION=8.3
+      - XDEBUG_ENABLED=1
+    volumes:
+      - shop_db-6690:/var/lib/mysql
+      - shop_data-6690:/var/www/html
+      - "./plugin:/var/www/html/custom/plugins/ProductImportPlugin"

@@ -33,19 +33,33 @@ class CustomFieldsInstaller
             return;
         }
 
+        $categoryIds = [
+            "01938c22fc1b70f6b3dc798973f9eee1",
+            "19ca405790ff4f07aac8c599d4317868",
+            "2185182cbbd4462ea844abeb2a438b33",
+            "251448b91bc742de85643f5fccd89051",
+            "48f97f432fd041388b2630184139cf0e",
+            "77b959cf66de4c1590c7f9b7da3982f3",
+            "8de9b484c54f441c894774e5f57e485c",
+            "a515ae260223466f8e37471d279e6406",
+            "bb22b05bff9140f3808b1cff975b75eb"
+        ];
+
         $products = [];
 
         foreach ($data['products'] as $apiProduct) {
             $productNumber = $apiProduct['sku'] ?? Uuid::randomHex();
 
-            
+
             $criteria = new Criteria();
             $criteria->addFilter(new EqualsFilter('productNumber', $productNumber));
             $existingProduct = $this->productRepository->search($criteria, $context)->first();
-    
+
             if ($existingProduct) {
                 continue;
             }
+
+            $categories = array_map(fn($id) => ['id' => $id], $categoryIds);
 
             $products[] = [
                 'id' => Uuid::randomHex(),
@@ -67,6 +81,7 @@ class CustomFieldsInstaller
                     "id" => Uuid::randomHex(),
                     'name' => $apiProduct['brand'] ?? "Unbekannt"
                 ],
+                'categories' => $categories,
             ];
         }
 
